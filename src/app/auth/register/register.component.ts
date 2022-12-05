@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit {
     });
 
     const {nombre, correo, password} = this.registroForm.value;
-    
+
     this.authService.crearUsuario(nombre, correo, password)
       .then(credenciales => {
         Swal.close();
