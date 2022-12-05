@@ -26,16 +26,20 @@ export class LoginComponent implements OnInit {
   }
 
   loginUsuario() {
+
     if (this.loginForm.invalid) {
       return
     }
+
     Swal.fire({
       title: 'Espere por favor...',
       didOpen: () => {
         Swal.showLoading(null);
       }
     });
+
     const {email, password} = this.loginForm.value;
+
     this.authService.loginUsuario(email, password)
       .then(credenciales => {
         Swal.close();

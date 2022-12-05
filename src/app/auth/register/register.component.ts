@@ -27,16 +27,20 @@ export class RegisterComponent implements OnInit {
   }
 
   crearUsuario() {
+
     if (this.registroForm.invalid) {
       return
     }
+
     Swal.fire({
       title: 'Espere por favor...',
       didOpen: () => {
         Swal.showLoading(null);
       }
     });
+
     const {nombre, correo, password} = this.registroForm.value;
+    
     this.authService.crearUsuario(nombre, correo, password)
       .then(credenciales => {
         Swal.close();
