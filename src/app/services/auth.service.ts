@@ -13,6 +13,11 @@ import {setUser, unSetUser} from "../auth/auth.actions";
 export class AuthService {
 
   userSubscription: Subscription;
+  private _user: UsuarioModel
+
+  get user() {
+    return this._user;
+  }
 
   constructor(public auth: AngularFireAuth,
               private firestore: AngularFirestore,
@@ -25,9 +30,11 @@ export class AuthService {
         this.userSubscription = this.firestore.doc(`${fuser.uid}/usuario`).valueChanges()
           .subscribe((firestore: any) => {
             const user = UsuarioModel.fromFirebase(firestore);
+            this._user = user;
             this.store.dispatch(setUser({user}))
           })
       } else {
+        this._user = null;
         if (this.userSubscription) {
           this.userSubscription.unsubscribe();
         }
